@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>X NET Fibra Óptica — Paga Menos, Recebe Muito Mais</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#0a0010;--card:rgba(16,2,26,.92);
+      --p:#8b2be2;--pl:#b44fff;--pg:rgba(180,79,255,.35);--pb:rgba(180,79,255,.18);
+      --g:#39ff8a;--gd:rgba(57,255,138,.12);
+      --w:#fff;--w8:rgba(255,255,255,.8);--w6:rgba(255,255,255,.6);--w4:rgba(255,255,255,.4);--w1:rgba(255,255,255,.06);
+      --red:#ff4d6a;
+    }
+    html{scroll-behavior:smooth}
+    body{background:var(--bg);color:var(--w);font-family:'Poppins',sans-serif;overflow-x:hidden}
+    body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.6}
+
+    .ct{max-width:1120px;margin:0 auto;padding:0 28px}
+    .ct-sm{max-width:780px;margin:0 auto;padding:0 28px}
+    .tc{text-align:center}
+
+    /* ── TYPO ── */
+    .label{display:inline-block;font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--pl);margin-bottom:14px}
+    .stitle{font-size:clamp(26px,4vw,44px);font-weight:800;line-height:1.15;margin-bottom:14px}
+
+    /* ── BUTTONS ── */
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:'Poppins',sans-serif;font-weight:700;font-size:15px;padding:16px 36px;border-radius:100px;border:none;cursor:pointer;text-decoration:none;transition:all .3s}
+    .bp{background:linear-gradient(135deg,var(--p),var(--pl));color:#fff;box-shadow:0 4px 28px var(--pg),0 0 60px rgba(139,43,226,.15)}
+    .bp:hover{box-shadow:0 6px 40px var(--pg),0 0 100px rgba(139,43,226,.3);transform:translateY(-2px)}
+    .bg{background:0;color:var(--w6);border:1.5px solid var(--pb)}
+    .bg:hover{border-color:var(--pl);color:#fff;background:rgba(180,79,255,.06)}
+    .bsm{font-size:13px;padding:12px 26px}
+    .blg{font-size:17px;padding:20px 48px}
+    @keyframes pulseBtn{0%,100%{box-shadow:0 4px 28px var(--pg),0 0 60px rgba(139,43,226,.15)}50%{box-shadow:0 4px 40px var(--pg),0 0 100px rgba(139,43,226,.35)}}
+    .bp-pulse{animation:pulseBtn 2s ease-in-out infinite}
+
+    /* ── ORBS ── */
+    .orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(100px);animation:fo 10s ease-in-out infinite}
+    @keyframes fo{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-25px) scale(1.04)}}
+
+    /* ── PARTICLES (hero) ── */
+    .particles{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+    .particles span{position:absolute;width:2px;height:2px;background:rgba(180,79,255,.4);border-radius:50%;animation:sparkle var(--d,8s) linear infinite}
+    @keyframes sparkle{0%{transform:translateY(0) scale(1);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-100vh) scale(0);opacity:0}}
+
+    /* ════════════════════════════
+       1. TOP BAR (urgência)
+    ════════════════════════════ */
+    .topbar{background:linear-gradient(90deg,var(--p),var(--pl));padding:8px 0;text-align:center;font-size:12px;font-weight:600;letter-spacing:.3px;position:relative;z-index:201}
+    .topbar .fire{animation:shake .5s ease-in-out infinite alternate}
+    @keyframes shake{0%{transform:rotate(-5deg)}100%{transform:rotate(5deg)}}
+
+    /* ════════════════════════════
+       2. NAVBAR
+    ════════════════════════════ */
+    nav{position:sticky;top:0;z-index:200;padding:14px 0;background:rgba(10,0,16,.75);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--pb);transition:background .3s}
+    .nav-i{display:flex;align-items:center;justify-content:space-between}
+    .logo{display:inline-flex;align-items:center;text-decoration:none}
+    .logo img{height:40px;width:auto;filter:drop-shadow(0 0 8px rgba(180,79,255,.4))}
+
+    /* ════════════════════════════
+       3. HERO
+    ════════════════════════════ */
+    #hero{padding:48px 0 0;position:relative;overflow:hidden;background:radial-gradient(ellipse 70% 60% at 50% 20%,rgba(139,43,226,.18) 0%,transparent 70%)}
+    #hero::before{content:'';position:absolute;top:50%;left:50%;width:90%;height:70%;transform:translate(-50%,-55%);background:radial-gradient(ellipse at center,rgba(139,43,226,.3) 0%,rgba(180,79,255,.08) 40%,transparent 70%);filter:blur(60px);pointer-events:none;z-index:0}
+    #hero::after{content:'';position:absolute;top:30px;left:50%;transform:translateX(-50%);width:60%;max-width:700px;height:2px;background:linear-gradient(90deg,transparent,rgba(180,79,255,.5),transparent);filter:blur(1px);pointer-events:none;z-index:1}
+    #hero .o1{width:500px;height:500px;background:rgba(139,43,226,.2);top:-60px;left:-100px}
+    #hero .o2{width:300px;height:300px;background:rgba(180,79,255,.1);top:40%;right:-80px;animation-delay:3s}
+
+    .htop{text-align:center;position:relative;z-index:2;margin-bottom:32px;padding:0 20px}
+    .badge{display:inline-flex;align-items:center;gap:8px;background:var(--gd);border:1px solid rgba(57,255,138,.2);color:var(--g);font-size:11px;font-weight:600;padding:7px 18px;border-radius:100px;animation:pb 2.5s ease-in-out infinite}
+    .badge .dot{width:7px;height:7px;background:var(--g);border-radius:50%;animation:bl 1s infinite}
+    @keyframes bl{0%,100%{opacity:1}50%{opacity:.3}}
+    @keyframes pb{0%,100%{box-shadow:0 0 0 0 rgba(57,255,138,.2)}50%{box-shadow:0 0 0 8px rgba(57,255,138,0)}}
+
+    .htop h1{font-size:clamp(30px,5vw,58px);font-weight:900;line-height:1.08;margin:18px auto 12px;max-width:700px;background:linear-gradient(180deg,#fff 30%,rgba(255,255,255,.6) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .htop p{font-size:clamp(14px,1.6vw,17px);color:var(--w6);line-height:1.7;max-width:520px;margin:0 auto}
+
+    /* Banner frame */
+    .hbanner{position:relative;z-index:2;max-width:960px;margin:0 auto;padding:0 20px}
+    .hframe{position:relative;border-radius:14px;overflow:hidden;border:1px solid rgba(180,79,255,.22);background:rgba(16,2,26,.6);box-shadow:0 24px 80px rgba(0,0,0,.6),0 0 100px rgba(139,43,226,.18)}
+    .hframe::before{content:'';display:block;height:32px;background:rgba(10,0,16,.85);border-bottom:1px solid rgba(180,79,255,.1);background-image:radial-gradient(circle,rgba(255,255,255,.15) 3.5px,transparent 3.5px),radial-gradient(circle,rgba(255,255,255,.15) 3.5px,transparent 3.5px),radial-gradient(circle,rgba(255,255,255,.15) 3.5px,transparent 3.5px);background-size:9px 9px;background-position:12px center,26px center,40px center;background-repeat:no-repeat}
+    .hframe img{width:100%;height:auto;display:block}
+    .hframe::after{content:'';position:absolute;bottom:-1px;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(180,79,255,.5),transparent)}
+    .hglow{position:relative;z-index:1;max-width:600px;margin:-20px auto 0;height:80px;background:radial-gradient(ellipse at center top,rgba(139,43,226,.2) 0%,transparent 70%);filter:blur(20px)}
+
+    /* Countdown */
+    .countdown-wrap{text-align:center;position:relative;z-index:2;margin-top:8px;margin-bottom:8px}
+    .countdown-label{font-size:12px;color:var(--w4);font-weight:500;margin-bottom:6px}
+    .countdown{display:inline-flex;gap:8px}
+    .cd-block{background:rgba(139,43,226,.15);border:1px solid var(--pb);border-radius:10px;padding:8px 14px;min-width:56px;text-align:center}
+    .cd-num{font-size:24px;font-weight:800;color:var(--w);display:block;line-height:1}
+    .cd-lbl{font-size:9px;color:var(--w4);text-transform:uppercase;letter-spacing:1px}
+
+    .hbody{position:relative;z-index:2;max-width:640px;margin:0 auto;padding:16px 20px 48px;text-align:center}
+    .hctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+    .htrust{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}
+    .htrust span{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--w4)}
+
+    /* ════════════════════════════
+       4. SOCIAL STRIP
+    ════════════════════════════ */
+    #strip{padding:16px 0;background:linear-gradient(90deg,rgba(139,43,226,.08),rgba(180,79,255,.04),rgba(139,43,226,.08));border-top:1px solid var(--pb);border-bottom:1px solid var(--pb)}
+    .strip-i{display:flex;gap:32px;justify-content:center;flex-wrap:wrap;align-items:center}
+    .si{font-weight:600;font-size:13px;display:flex;align-items:center;gap:6px}
+    .si .n{color:var(--pl);font-weight:800;font-size:18px}
+    .ss{color:var(--pb)}
+
+    /* ════════════════════════════
+       5. HOW IT WORKS
+    ════════════════════════════ */
+    .sec{padding:80px 0}
+    #steps{background:rgba(139,43,226,.02)}
+    .steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;margin-top:48px;position:relative}
+    .steps-grid::before{content:'';position:absolute;top:40px;left:16%;right:16%;height:2px;background:linear-gradient(90deg,transparent,var(--pb),var(--pb),transparent);z-index:0}
+    .step{text-align:center;position:relative;z-index:1}
+    .step-num{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--pl));display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;margin:0 auto 16px;box-shadow:0 0 30px var(--pg);border:3px solid var(--bg)}
+    .step h4{font-size:16px;font-weight:700;margin-bottom:6px}
+    .step p{font-size:13px;color:var(--w6);line-height:1.6;max-width:240px;margin:0 auto}
+
+    /* ════════════════════════════
+       6. WHY X NET
+    ════════════════════════════ */
+    #why{overflow:hidden}
+    .why-g{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start}
+    .why-t h2{font-size:clamp(26px,3.5vw,42px);font-weight:800;line-height:1.15;margin-bottom:14px}
+    .why-t>p{font-size:14px;color:var(--w6);line-height:1.8;margin-bottom:28px}
+    .dc{display:flex;flex-direction:column;gap:12px}
+    .dc-item{background:var(--w1);border:1px solid var(--pb);border-radius:14px;padding:20px;transition:all .3s;backdrop-filter:blur(6px)}
+    .dc-item:hover{border-color:rgba(180,79,255,.4);background:rgba(139,43,226,.08);transform:translateX(4px)}
+    .dc-item h4{font-size:15px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:10px}
+    .dc-ico{width:32px;height:32px;border-radius:8px;flex-shrink:0;background:linear-gradient(135deg,var(--p),var(--pl));display:flex;align-items:center;justify-content:center;font-size:14px;box-shadow:0 0 12px var(--pg)}
+    .dc-item p{font-size:12px;color:var(--w6);line-height:1.6;padding-left:42px}
+
+    /* ════════════════════════════
+       7. COMPARISON
+    ════════════════════════════ */
+    #compare{background:rgba(139,43,226,.03)}
+    .cmp-table{margin-top:48px;border-radius:16px;overflow:hidden;border:1px solid var(--pb);background:var(--card)}
+    .cmp-row{display:grid;grid-template-columns:1.8fr 1fr 1fr;align-items:center;padding:14px 24px;border-bottom:1px solid var(--pb);font-size:14px}
+    .cmp-row:last-child{border-bottom:none}
+    .cmp-head{background:rgba(139,43,226,.1);font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase}
+    .cmp-head .xnet{color:var(--pl)}
+    .cmp-feat{color:var(--w6);font-weight:500}
+    .cmp-yes{color:var(--g);font-weight:700;text-align:center}
+    .cmp-no{color:var(--red);font-weight:600;text-align:center;opacity:.7}
+
+    /* ════════════════════════════
+       8. PLANS
+    ════════════════════════════ */
+    .plans-g{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px;align-items:start}
+    .pc{background:var(--card);border:1px solid var(--pb);border-radius:20px;padding:32px 24px;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:all .35s}
+    .pc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent 10%,var(--pl) 50%,transparent 90%);opacity:.5}
+    .pc:hover{border-color:rgba(180,79,255,.45);transform:translateY(-6px);box-shadow:0 20px 60px rgba(139,43,226,.2)}
+    .pc.pop{border-color:var(--pl);background:rgba(139,43,226,.08);box-shadow:0 0 50px rgba(139,43,226,.15);transform:scale(1.04);z-index:2}
+    .pc.pop:hover{transform:scale(1.04) translateY(-8px);box-shadow:0 28px 80px rgba(139,43,226,.35)}
+    .pop-b{position:absolute;top:0;left:0;right:0;background:linear-gradient(90deg,var(--p),var(--pl));color:#fff;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-align:center;padding:6px;line-height:1}
+    .pc.pop{padding-top:44px}
+    .pt{font-weight:800;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--pl);margin-bottom:8px}
+    .ps{font-size:46px;font-weight:900;line-height:1}
+    .ps small{font-size:16px;color:var(--w6);font-weight:600}
+    .ppd{font-size:11px;color:var(--w4);margin-top:2px}
+    .pp{font-size:30px;font-weight:800;margin:10px 0 0;display:flex;align-items:baseline;gap:3px}
+    .pp small{font-size:13px;font-weight:500;color:var(--w6)}
+    .pp-old{font-size:14px;color:var(--red);text-decoration:line-through;font-weight:500;margin-bottom:2px}
+    .psep{height:1px;background:var(--pb);margin:14px 0}
+    .pf{list-style:none;display:flex;flex-direction:column;gap:9px;flex:1}
+    .pf li{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--w6)}
+    .pf .ck{color:var(--g);font-size:14px;flex-shrink:0;margin-top:2px}
+    .pc .btn{margin-top:20px;width:100%}
+    .pc:not(.pop) .btn{background:0;border:1.5px solid var(--pb);color:var(--w6);box-shadow:none}
+    .pc:not(.pop) .btn:hover{border-color:var(--pl);background:rgba(139,43,226,.1);color:#fff}
+
+    /* ════════════════════════════
+       9. GUARANTEE
+    ════════════════════════════ */
+    #guarantee{background:linear-gradient(180deg,rgba(139,43,226,.06) 0%,var(--bg) 100%)}
+    .guar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
+    .guar-card{text-align:center;padding:28px 20px;border-radius:16px;background:var(--w1);border:1px solid var(--pb);transition:all .3s}
+    .guar-card:hover{border-color:rgba(180,79,255,.4);transform:translateY(-3px)}
+    .guar-ico{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--pl));display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 14px;box-shadow:0 0 24px var(--pg)}
+    .guar-card h4{font-size:15px;font-weight:700;margin-bottom:6px}
+    .guar-card p{font-size:12px;color:var(--w6);line-height:1.6}
+
+    /* ════════════════════════════
+       10. TESTIMONIALS
+    ════════════════════════════ */
+    .tg{position:relative;overflow:hidden;margin-top:48px}
+    .tg-track{display:flex;transition:transform .5s ease}
+    .tg-slide{min-width:100%;display:grid;grid-template-columns:repeat(2,1fr);gap:20px;padding:0 4px}
+    .tg-nav{display:flex;justify-content:center;align-items:center;gap:16px;margin-top:24px}
+    .tg-arrow{width:40px;height:40px;border-radius:50%;background:var(--w1);border:1px solid var(--pb);color:var(--w6);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:all .3s}
+    .tg-arrow:hover{border-color:var(--pl);color:#fff;background:rgba(139,43,226,.15)}
+    .tg-dots{display:flex;gap:8px}
+    .tg-dot{width:8px;height:8px;border-radius:50%;background:var(--pb);cursor:pointer;transition:all .3s}
+    .tg-dot.active{background:var(--pl);box-shadow:0 0 8px var(--pg)}
+    .tc-card{background:var(--w1);border:1px solid var(--pb);border-radius:16px;padding:24px;backdrop-filter:blur(6px);transition:all .3s;text-align:left}
+    .tc-card:hover{border-color:rgba(180,79,255,.35);transform:translateY(-3px)}
+    .tc-top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+    .tc-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--p),var(--pl));display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;flex-shrink:0}
+    .tc-info{flex:1}
+    .tc-name{font-weight:700;font-size:13px}
+    .tc-role{font-size:11px;color:var(--w6)}
+    .tc-meta{font-size:10px;color:var(--w4)}
+    .tc-badge{font-size:9px;font-weight:600;color:var(--g);background:rgba(57,255,138,.1);border:1px solid rgba(57,255,138,.2);padding:2px 8px;border-radius:100px;display:inline-block;margin-top:2px}
+    .tc-stars{color:#ffd600;font-size:13px;letter-spacing:2px;margin-bottom:10px}
+    .tc-quote{font-size:13px;color:var(--w6);line-height:1.7;font-style:italic}
+    .tc-google{display:inline-flex;align-items:center;gap:8px;margin-top:28px;padding:12px 28px;border-radius:100px;background:var(--w1);border:1px solid var(--pb);color:var(--w6);font-size:13px;font-weight:600;text-decoration:none;transition:all .3s}
+    .tc-google:hover{border-color:var(--pl);color:#fff;background:rgba(139,43,226,.1)}
+
+    /* ════════════════════════════
+       DAILY PRICE HIGHLIGHT
+    ════════════════════════════ */
+    .daily-hero{margin:24px auto 0;text-align:center;position:relative;z-index:2}
+    .daily-hero-box{display:inline-flex;align-items:center;gap:12px;background:linear-gradient(135deg,rgba(57,255,138,.08),rgba(139,43,226,.1));border:1.5px solid rgba(57,255,138,.25);border-radius:16px;padding:16px 32px;backdrop-filter:blur(10px)}
+    .daily-hero-box .daily-val{font-size:clamp(28px,4vw,42px);font-weight:900;color:var(--g);line-height:1;text-shadow:0 0 30px rgba(57,255,138,.3)}
+    .daily-hero-box .daily-val small{font-size:14px;font-weight:600;color:var(--w6)}
+    .daily-hero-box .daily-txt{font-size:13px;color:var(--w6);text-align:left;line-height:1.5}
+    .daily-hero-box .daily-txt strong{color:#fff;display:block;font-size:14px}
+
+    /* ════════════════════════════
+       11. FAQ
+    ════════════════════════════ */
+    #faq{background:rgba(139,43,226,.02)}
+    .faq-l{display:flex;flex-direction:column;gap:10px;margin-top:40px;text-align:left}
+    .fq{background:var(--w1);border:1px solid var(--pb);border-radius:12px;overflow:hidden;transition:border-color .3s}
+    .fq.open{border-color:rgba(180,79,255,.45)}
+    .fq-q{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;cursor:pointer;gap:12px;font-weight:700;font-size:14px;user-select:none;transition:color .2s}
+    .fq-q:hover{color:var(--pl)}
+    .fq-cat{font-size:9px;font-weight:700;color:var(--pl);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:2px}
+    .fq-arr{font-size:18px;color:var(--pl);transition:transform .3s;flex-shrink:0}
+    .fq.open .fq-arr{transform:rotate(45deg)}
+    .fq-a{max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s;padding:0 20px;color:var(--w6);font-size:13px;line-height:1.7}
+    .fq.open .fq-a{max-height:400px;padding:0 20px 16px}
+    .faq-cta{text-align:center;margin-top:32px}
+    .faq-cta p{font-size:14px;color:var(--w6);margin-bottom:12px}
+
+    /* ════════════════════════════
+       12. FINAL CTA
+    ════════════════════════════ */
+    #cta{padding:100px 0;text-align:center;position:relative;overflow:hidden}
+    #cta .oc1{width:600px;height:600px;background:rgba(139,43,226,.18);top:50%;left:50%;transform:translate(-50%,-50%)}
+    #cta .oc2{width:350px;height:350px;background:rgba(57,255,138,.04);top:-40px;right:-80px;animation-delay:4s}
+    .cta-w{position:relative;z-index:1}
+    .cta-w h2{font-size:clamp(26px,4.5vw,52px);font-weight:900;margin-bottom:12px}
+    .cta-w>p{font-size:15px;color:var(--w6);max-width:480px;margin:0 auto 28px}
+    .cta-pricing{margin-bottom:28px}
+    .cta-old{font-size:16px;color:var(--red);text-decoration:line-through;font-weight:500}
+    .cta-new{font-size:28px;font-weight:900;color:var(--pl)}
+    .cta-seals{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+    .cta-seal{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--w4);font-weight:500}
+    .cta-micro{font-size:11px;color:var(--w4);margin-top:12px;letter-spacing:.5px}
+
+    /* ════════════════════════════
+       13. FOOTER
+    ════════════════════════════ */
+    footer{padding:48px 0 20px;border-top:1px solid var(--pb)}
+    .ft{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:44px;margin-bottom:36px}
+    .ft-b .logo{display:inline-flex;margin-bottom:10px}
+    .ft-b p{color:var(--w4);font-size:12px;line-height:1.7}
+    .ft-c h4{font-weight:700;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--pl);margin-bottom:14px}
+    .ft-c ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+    .ft-c ul a{color:var(--w4);font-size:12px;text-decoration:none;transition:color .2s}
+    .ft-c ul a:hover{color:#fff}
+    .ft-ct a{display:flex;align-items:center;gap:8px;color:var(--w6);font-size:12px;font-weight:600;text-decoration:none;margin-bottom:8px;transition:color .2s}
+    .ft-ct a:hover{color:var(--pl)}
+    .ft-bot{padding-top:18px;border-top:1px solid var(--pb);text-align:center}
+    .ft-bot p{color:var(--w4);font-size:10px}
+
+    /* ════════════════════════════
+       14. WHATSAPP FLOAT
+    ════════════════════════════ */
+    .wpp{position:fixed;bottom:24px;right:24px;z-index:300;width:56px;height:56px;border-radius:50%;background:#25d366;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.4);cursor:pointer;text-decoration:none;transition:all .3s;animation:wppBounce 2s ease-in-out infinite}
+    .wpp:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(37,211,102,.6)}
+    .wpp svg{width:28px;height:28px;fill:#fff}
+    @keyframes wppBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+    .wpp-tip{position:absolute;right:68px;top:50%;transform:translateY(-50%);background:var(--card);border:1px solid var(--pb);color:var(--w);font-size:12px;font-weight:600;padding:6px 14px;border-radius:8px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .3s}
+    .wpp:hover .wpp-tip{opacity:1}
+
+    /* ── ANIMATIONS ── */
+    .fu{opacity:0;transform:translateY(24px);transition:opacity .55s ease,transform .55s ease}
+    .fu.vis{opacity:1;transform:translateY(0)}
+    .fu:nth-child(2){transition-delay:.08s}
+    .fu:nth-child(3){transition-delay:.16s}
+
+    /* ═══════════════════════════
+       RESPONSIVE
+    ═══════════════════════════ */
+    @media(max-width:900px){
+      .plans-g,.guar-grid{grid-template-columns:1fr;max-width:400px;margin-left:auto;margin-right:auto}
+      .tg-slide{grid-template-columns:1fr}
+      .why-g{grid-template-columns:1fr;gap:36px}
+      .steps-grid{grid-template-columns:1fr;gap:24px;max-width:300px;margin-left:auto;margin-right:auto}
+      .steps-grid::before{display:none}
+      .ft{grid-template-columns:1fr;gap:24px}
+      .cmp-row{grid-template-columns:1.5fr 1fr 1fr;font-size:12px;padding:10px 16px}
+      .pc.pop{transform:none}
+      .pc.pop:hover{transform:translateY(-6px)}
+      .daily-hero-box{flex-direction:column;padding:14px 20px;gap:8px}
+      .daily-hero-box .daily-txt{text-align:center}
+    }
+    @media(max-width:768px){
+      .topbar{font-size:10px;padding:6px 10px}
+      nav{padding:10px 0}
+      .logo img{height:32px}
+      .bsm{font-size:11px;padding:10px 18px}
+      #hero{padding-top:36px}
+      .htop{margin-bottom:20px}
+      .htop h1{font-size:28px}
+      .hbanner{padding:0 14px}
+      .hframe{border-radius:10px}
+      .hframe::before{height:24px}
+      .hglow{height:50px}
+      .hbody{padding:12px 14px 36px}
+      .hctas{flex-direction:column;align-items:center;gap:10px}
+      .hctas .btn{width:100%;max-width:320px}
+      .htrust{flex-direction:column;align-items:center;gap:6px}
+      .countdown .cd-block{padding:6px 10px;min-width:48px}
+      .cd-num{font-size:20px}
+      .strip-i{gap:10px;flex-direction:column;align-items:center}
+      .ss{display:none}
+      .sec{padding:56px 0}
+      .ct,.ct-sm{padding:0 16px}
+      .stitle{font-size:24px}
+      .why-t h2{font-size:24px}
+      .ps{font-size:40px}
+      .pp{font-size:26px}
+      #cta{padding:64px 0}
+      .cta-w h2{font-size:26px}
+      .blg{font-size:14px;padding:16px 32px}
+      footer{padding:36px 0 16px}
+      .ft-bot{text-align:center}
+      .wpp{width:48px;height:48px;bottom:16px;right:16px}
+      .wpp svg{width:24px;height:24px}
+    }
+    @media(max-width:480px){
+      .topbar{font-size:9px}
+      .logo img{height:26px}
+      .bsm{font-size:10px;padding:8px 14px}
+      #hero{padding-top:28px}
+      .htop h1{font-size:24px}
+      .htop p{font-size:12px}
+      .hbanner{padding:0 10px}
+      .hframe::before{height:20px;background-size:7px 7px;background-position:8px center,20px center,32px center}
+      .hctas .btn{font-size:13px;padding:14px 24px}
+      .sec{padding:44px 0}
+      .ct,.ct-sm{padding:0 12px}
+      .stitle{font-size:21px}
+      .step-num{width:52px;height:52px;font-size:20px}
+      .step h4{font-size:14px}
+      .cmp-row{font-size:11px;padding:8px 12px}
+      .pc{padding:22px 18px;border-radius:16px}
+      .ps{font-size:36px}
+      .pp{font-size:24px}
+      .blg{font-size:13px;padding:14px 28px;width:100%;max-width:300px}
+      .cta-seals{flex-direction:column;align-items:center;gap:8px}
+    }
+  </style>
+</head>
+<body>
+
+<!-- 1. TOP BAR -->
+<div class="topbar">
+  <span class="fire" style="display:inline-block">🔥</span>
+  Últimas vagas com instalação grátis — Oferta por tempo limitado!
+</div>
+
+<!-- 2. NAVBAR -->
+<nav>
+  <div class="ct nav-i">
+    <a href="#" class="logo"><img src="Logo xnet.png" alt="X NET Fibra Óptica"/></a>
+    <a href="https://wa.link/0ff5rs" class="btn bp bsm bp-pulse">⚡ Quero Contratar</a>
+  </div>
+</nav>
+
+<!-- 3. HERO -->
+<section id="hero">
+  <div class="orb o1"></div>
+  <div class="orb o2"></div>
+  <div class="particles" id="particles"></div>
+
+  <div class="htop">
+    <div class="badge"><span class="dot"></span>Oferta por tempo limitado</div>
+    <h1>Paga Menos.<br>Recebe Muito Mais.</h1>
+    <p>Internet fibra óptica de verdade, sem fidelidade — com instalação grátis e Wi-Fi Giga incluso.</p>
+  </div>
+
+  <div class="hbanner">
+    <div class="hframe">
+      <img src="XNET - Banner SITE.jpg" alt="X NET — Paga Menos e Recebe Mais"/>
+    </div>
+  </div>
+  <div class="hglow"></div>
+
+  <!-- Countdown -->
+  <div class="countdown-wrap">
+    <div class="countdown-label">Esta oferta expira em:</div>
+    <div class="countdown" id="countdown">
+      <div class="cd-block"><span class="cd-num" id="cd-h">23</span><span class="cd-lbl">Horas</span></div>
+      <div class="cd-block"><span class="cd-num" id="cd-m">59</span><span class="cd-lbl">Min</span></div>
+      <div class="cd-block"><span class="cd-num" id="cd-s">59</span><span class="cd-lbl">Seg</span></div>
+    </div>
+  </div>
+
+  <!-- Daily Price Highlight -->
+  <div class="daily-hero">
+    <div class="daily-hero-box">
+      <div class="daily-val">R$ 3,33<small>/dia</small></div>
+      <div class="daily-txt"><strong>Internet de verdade a partir de R$ 3,33 por dia</strong>Menos que um cafezinho — e conecta a casa toda.</div>
+    </div>
+  </div>
+
+  <div class="hbody">
+    <div class="hctas">
+      <a href="https://wa.link/0ff5rs" class="btn bp bp-pulse">⚡ Contratar por R$ 3,33/dia</a>
+      <a href="#plans" class="btn bg">Ver todos os planos ↓</a>
+    </div>
+    <div class="htrust">
+      <span>🔧 Instalação Grátis</span>
+      <span>🔄 Sem Fidelidade</span>
+      <span>📶 Wi-Fi 6 incluso</span>
+    </div>
+  </div>
+</section>
+
+<!-- 4. SOCIAL STRIP -->
+<div id="strip">
+  <div class="ct strip-i">
+    <div class="si"><span class="n" data-target="12000">0</span>+ clientes</div>
+    <span class="ss">·</span>
+    <div class="si">📡 Fibra 100%</div>
+    <span class="ss">·</span>
+    <div class="si"><span class="n" data-target="98">0</span>% satisfação</div>
+    <span class="ss">·</span>
+    <div class="si">⭐ <span class="n" data-target="4.9" data-decimal="true">0</span>/5</div>
+    <span class="ss">·</span>
+    <div class="si">🕐 Suporte 24h</div>
+  </div>
+</div>
+
+<!-- 5. COMO FUNCIONA -->
+<section id="steps" class="sec">
+  <div class="ct tc">
+    <span class="label">Simples e rápido</span>
+    <h2 class="stitle">Conecte-se em 3 passos</h2>
+    <div class="steps-grid">
+      <div class="step fu">
+        <div class="step-num">1</div>
+        <h4>Escolha seu plano</h4>
+        <p>Selecione o plano ideal para você. Todos sem fidelidade.</p>
+      </div>
+      <div class="step fu">
+        <div class="step-num">2</div>
+        <h4>Agendamos a instalação</h4>
+        <p>Instalação grátis em até 48h. Técnico na sua casa sem custo.</p>
+      </div>
+      <div class="step fu">
+        <div class="step-num">3</div>
+        <h4>Aproveite a velocidade</h4>
+        <p>Pronto! Navegue, trabalhe e assista sem travar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. WHY X NET -->
+<section id="why" class="sec">
+  <div class="ct">
+    <div class="why-g">
+      <div class="why-t fu">
+        <span class="label">A conexão que você merecia</span>
+        <h2>Velocidade real.<br>Sem travar.<br>Sem desculpa.</h2>
+        <p>Enquanto outras operadoras prometem e não entregam, a X NET chega com fibra óptica pura. Streaming sem buffer, chamadas sem queda e download real.</p>
+        <a href="https://wa.link/0ff5rs" class="btn bp">Contratar agora →</a>
+      </div>
+      <div class="dc">
+        <div class="dc-item fu">
+          <h4><span class="dc-ico">💸</span> Preço justo</h4>
+          <p>A partir de R$ 99,90/mês. Sem taxas escondidas.</p>
+        </div>
+        <div class="dc-item fu">
+          <h4><span class="dc-ico">🚫</span> Zero fidelidade</h4>
+          <p>Cancele quando quiser, sem multa e sem burocracia.</p>
+        </div>
+        <div class="dc-item fu">
+          <h4><span class="dc-ico">⚡</span> Instalação Grátis</h4>
+          <p>Técnico na sua casa, sem custo adicional.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. COMPARISON -->
+<section id="compare" class="sec">
+  <div class="ct-sm tc">
+    <span class="label">Compare e decida</span>
+    <h2 class="stitle">X NET vs Outras operadoras</h2>
+    <div class="cmp-table fu">
+      <div class="cmp-row cmp-head">
+        <div></div>
+        <div class="xnet tc">X NET</div>
+        <div class="tc">Outras</div>
+      </div>
+      <div class="cmp-row">
+        <div class="cmp-feat">Sem fidelidade</div>
+        <div class="cmp-yes">✅ Sim</div>
+        <div class="cmp-no">❌ 12 meses</div>
+      </div>
+      <div class="cmp-row">
+        <div class="cmp-feat">Instalação grátis</div>
+        <div class="cmp-yes">✅ Sempre</div>
+        <div class="cmp-no">❌ R$ 100+</div>
+      </div>
+      <div class="cmp-row">
+        <div class="cmp-feat">Velocidade real</div>
+        <div class="cmp-yes">✅ Garantida</div>
+        <div class="cmp-no">❌ "Até"</div>
+      </div>
+      <div class="cmp-row">
+        <div class="cmp-feat">Taxas ocultas</div>
+        <div class="cmp-yes">✅ Zero</div>
+        <div class="cmp-no">❌ Várias</div>
+      </div>
+      <div class="cmp-row">
+        <div class="cmp-feat">Wi-Fi Giga incluso</div>
+        <div class="cmp-yes">✅ Incluso</div>
+        <div class="cmp-no">❌ Aluguel</div>
+      </div>
+      <div class="cmp-row">
+        <div class="cmp-feat">Suporte humanizado</div>
+        <div class="cmp-yes">✅ 24h</div>
+        <div class="cmp-no">❌ Robôs</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. PLANS -->
+<section id="plans" class="sec">
+  <div class="ct tc">
+    <span class="label">Escolha o seu</span>
+    <h2 class="stitle">Planos para toda necessidade —<br>todos com Wi-Fi 6 incluso.</h2>
+    <div class="plans-g">
+
+      <div class="pc fu">
+        <div class="pt">⚡ 600 Mega</div>
+        <div class="ps">600 <small>Mega</small></div>
+        <div class="ppd">Apenas R$ 3,33/dia</div>
+        <div class="pp">R$ 99<small>,90/mês</small></div>
+        <div class="psep"></div>
+        <ul class="pf">
+          <li><span class="ck">✓</span> Instalação 100% Gratuita</li>
+          <li><span class="ck">✓</span> Roteador Wi-Fi 6 Dual Band incluso</li>
+          <li><span class="ck">✓</span> Sem fidelidade ou multas</li>
+          <li><span class="ck">✓</span> Suporte técnico especializado</li>
+          <li><span class="ck">✓</span> Ideal para streaming e estudos</li>
+          <li><span class="ck">✓</span> 4 dispositivos simultâneos</li>
+        </ul>
+        <a href="https://wa.link/0ff5rs" class="btn">Contratar Agora →</a>
+      </div>
+
+      <div class="pc pop fu">
+        <div class="pop-b">⭐ MELHOR CUSTO-BENEFÍCIO · Recomendado</div>
+        <div class="pt">🥇 800 Mega</div>
+        <div class="ps">800 <small>Mega</small></div>
+        <div class="ppd">Apenas R$ 4,00/dia</div>
+        <div class="pp">R$ 119<small>,90/mês</small></div>
+        <div class="psep"></div>
+        <ul class="pf">
+          <li><span class="ck">✓</span> Atendimento prioritário</li>
+          <li><span class="ck">✓</span> Roteador Wi-Fi 6 incluso</li>
+          <li><span class="ck">✓</span> Sem fidelidade ou multas</li>
+          <li><span class="ck">✓</span> Upload simétrico</li>
+          <li><span class="ck">✓</span> Ideal para jogos online</li>
+          <li><span class="ck">✓</span> 6 dispositivos simultâneos</li>
+        </ul>
+        <a href="https://wa.link/0ff5rs" class="btn bp bp-pulse">⚡ Contratar Agora →</a>
+      </div>
+
+      <div class="pc fu">
+        <div class="pt">🚀 Premium · 1000 Mega</div>
+        <div class="ps">1000 <small>Mega</small></div>
+        <div class="ppd">Apenas R$ 4,66/dia</div>
+        <div class="pp">R$ 139<small>,90/mês</small></div>
+        <div class="psep"></div>
+        <ul class="pf">
+          <li><span class="ck">✓</span> Suporte exclusivo</li>
+          <li><span class="ck">✓</span> Roteador Wi-Fi 6 incluso</li>
+          <li><span class="ck">✓</span> Sem fidelidade ou multas</li>
+          <li><span class="ck">✓</span> Velocidade garantida</li>
+          <li><span class="ck">✓</span> Ideal para jogos online e empresas</li>
+          <li><span class="ck">✓</span> 10+ dispositivos simultâneos</li>
+        </ul>
+        <a href="https://wa.link/0ff5rs" class="btn">Contratar Agora →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- 9. GUARANTEE -->
+<section id="guarantee" class="sec">
+  <div class="ct tc">
+    <span class="label">Sua segurança</span>
+    <h2 class="stitle">Satisfação garantida<br>ou cancele grátis.</h2>
+    <div class="guar-grid">
+      <div class="guar-card fu">
+        <div class="guar-ico">🛡️</div>
+        <h4>Sem multa</h4>
+        <p>Cancele a qualquer momento. Sem multa, sem letras miúdas.</p>
+      </div>
+      <div class="guar-card fu">
+        <div class="guar-ico">⚡</div>
+        <h4>Instalação em 48h</h4>
+        <p>Técnico na sua casa em até 2 dias úteis, sem custo extra.</p>
+      </div>
+      <div class="guar-card fu">
+        <div class="guar-ico">🔒</div>
+        <h4>Sem surpresas</h4>
+        <p>O valor que você vê é o que paga. Zero taxas ocultas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10. TESTIMONIALS -->
+<section id="testimonials" class="sec">
+  <div class="ct tc">
+    <span class="label">Quem já está conectado</span>
+    <h2 class="stitle">+12.000 clientes não podem estar errados.</h2>
+    <div class="tg" id="tg-carousel">
+      <div class="tg-track" id="tg-track">
+        <!-- Slide 1: 2 cards -->
+        <div class="tg-slide">
+          <div class="tc-card fu">
+            <div class="tc-top">
+              <div class="tc-avatar">MS</div>
+              <div class="tc-info">
+                <div class="tc-name">Maria Silva</div>
+                <div class="tc-role">Empresária</div>
+                <div class="tc-meta">Bairro Savoy</div>
+                <span class="tc-badge">✓ Verificado</span>
+              </div>
+            </div>
+            <div class="tc-stars">★★★★★</div>
+            <p class="tc-quote">"Mudei da concorrência e a diferença é absurda! Nunca mais tive problemas com quedas ou lentidão. O suporte é excepcional!"</p>
+          </div>
+          <div class="tc-card fu">
+            <div class="tc-top">
+              <div class="tc-avatar">JS</div>
+              <div class="tc-info">
+                <div class="tc-name">João Santos</div>
+                <div class="tc-role">Desenvolvedor</div>
+                <div class="tc-meta">Centro, Itanhaém</div>
+                <span class="tc-badge">✓ Verificado</span>
+              </div>
+            </div>
+            <div class="tc-stars">★★★★★</div>
+            <p class="tc-quote">"Trabalho com videoconferências o dia todo e jogos à noite. A conexão nunca me deixa na mão. Melhor investimento que fiz!"</p>
+          </div>
+        </div>
+        <!-- Slide 2: 2 cards -->
+        <div class="tg-slide">
+          <div class="tc-card fu">
+            <div class="tc-top">
+              <div class="tc-avatar">AC</div>
+              <div class="tc-info">
+                <div class="tc-name">Ana Clara</div>
+                <div class="tc-role">Professora</div>
+                <div class="tc-meta">Jardim Coronel</div>
+                <span class="tc-badge">✓ Verificado</span>
+              </div>
+            </div>
+            <div class="tc-stars">★★★★★</div>
+            <p class="tc-quote">"Instalação rápida, técnicos educados e internet que realmente entrega a velocidade prometida. Recomendo de olhos fechados!"</p>
+          </div>
+          <div class="tc-card fu">
+            <div class="tc-top">
+              <div class="tc-avatar">RL</div>
+              <div class="tc-info">
+                <div class="tc-name">Roberto Lima</div>
+                <div class="tc-role">Arquiteto</div>
+                <div class="tc-meta">Vila São Paulo</div>
+                <span class="tc-badge">✓ Verificado</span>
+              </div>
+            </div>
+            <div class="tc-stars">★★★★★</div>
+            <p class="tc-quote">"Preço justo e qualidade impecável. Minha família toda usa simultaneamente sem travamentos. Perfeito!"</p>
+          </div>
+        </div>
+      </div>
+      <div class="tg-nav">
+        <div class="tg-arrow" id="tg-prev">‹</div>
+        <div class="tg-dots" id="tg-dots">
+          <div class="tg-dot active" data-slide="0"></div>
+          <div class="tg-dot" data-slide="1"></div>
+        </div>
+        <div class="tg-arrow" id="tg-next">›</div>
+      </div>
+    </div>
+    <a href="https://www.google.com/maps" target="_blank" class="tc-google">⭐ Ver Mais Avaliações no Google</a>
+  </div>
+</section>
+
+<!-- 11. FAQ -->
+<section id="faq" class="sec">
+  <div class="ct-sm tc">
+    <span class="label">Tire suas dúvidas</span>
+    <h2 class="stitle">Perguntas frequentes</h2>
+    <div class="faq-l">
+
+      <div class="fq">
+        <div class="fq-q"><span><span class="fq-cat">Instalação</span><br>Como é feita a instalação do serviço?</span><span class="fq-arr">+</span></div>
+        <div class="fq-a">Nossa equipe técnica especializada realiza a instalação dentro do período comercial (Segunda a Sábado: 9h às 17h20). A instalação é 100% gratuita, rápida (em média 2 horas) e limpa. Fornecemos todos os equipamentos necessários: modem de fibra óptica, roteador Wi-Fi 6 de última geração e até 100 metros de cabo de fibra. Deixamos tudo configurado e funcionando perfeitamente no mesmo dia. Após o cadastro com a documentação do cliente, agendamos a instalação.</div>
+      </div>
+
+      <div class="fq">
+        <div class="fq-q"><span><span class="fq-cat">Contrato</span><br>Existe taxa de cancelamento ou fidelidade?</span><span class="fq-arr">+</span></div>
+        <div class="fq-a">Não! Na XNET você tem liberdade total. Não cobramos taxa de cancelamento, não temos contrato de fidelidade e você pode cancelar a qualquer momento sem multas. Acreditamos que você deve ficar conosco pela qualidade do serviço, não por obrigação contratual.</div>
+      </div>
+
+      <div class="fq">
+        <div class="fq-q"><span><span class="fq-cat">Preços</span><br>Qual o valor dos planos?</span><span class="fq-arr">+</span></div>
+        <div class="fq-a">O valor dos planos é fixo: R$ 99,90 para 600 Mega, R$ 119,90 para 800 Mega e R$ 139,90 para 1000 Mega. Este valor só sofre reajuste anual conforme índice da Anatel, como qualquer serviço de telecomunicação.</div>
+      </div>
+
+      <div class="fq">
+        <div class="fq-q"><span><span class="fq-cat">Planos</span><br>Posso mudar de plano depois?</span><span class="fq-arr">+</span></div>
+        <div class="fq-a">Sim! Você tem total flexibilidade para aumentar ou diminuir a velocidade do seu plano a qualquer momento. A mudança é feita de forma simples e rápida através da área do cliente, WhatsApp ou telefone. A alteração entra em vigor no próximo ciclo de faturamento.</div>
+      </div>
+
+      <div class="fq">
+        <div class="fq-q"><span><span class="fq-cat">Prazo</span><br>Em quanto tempo a internet é instalada?</span><span class="fq-arr">+</span></div>
+        <div class="fq-a">Nossos serviços são pós-pagos e a instalação é totalmente gratuita, ou seja, não há taxa inicial a ser paga. Após a confirmação do seu cadastro e envio da documentação, nossa equipe entrará em contato em até 2 horas úteis para agendar a instalação. Geralmente, conseguimos instalar em até 48 horas úteis, dependendo da disponibilidade na sua região.</div>
+      </div>
+
+      <div class="fq">
+        <div class="fq-q"><span><span class="fq-cat">Benefícios</span><br>O que está incluído no plano?</span><span class="fq-arr">+</span></div>
+        <div class="fq-a">Todos os planos incluem: instalação gratuita, modem de fibra óptica, roteador Wi-Fi 6 dual band, configuração completa, suporte técnico especializado, manutenção preventiva, e acesso à área do cliente com relatórios de consumo e velocidade.</div>
+      </div>
+
+    </div>
+    <div class="faq-cta">
+      <p>Ainda tem dúvida?</p>
+      <a href="https://wa.link/0ff5rs" class="btn bp bsm">📲 Fale no WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- 12. FINAL CTA -->
+<section id="cta">
+  <div class="orb oc1"></div>
+  <div class="orb oc2"></div>
+  <div class="ct cta-w tc">
+    <span class="label">Não perca mais tempo</span>
+    <h2>A internet que você merece<br>está a um clique.</h2>
+    <p>Contrate agora e tenha instalação ainda esta semana.</p>
+    <div class="cta-pricing">
+      <div class="cta-new" style="font-size:36px">Apenas R$ 3,33/dia</div>
+      <div style="font-size:14px;color:var(--w6);margin-top:4px">A partir de R$ 99,90/mês · 600 Mega de velocidade</div>
+    </div>
+    <a href="https://wa.link/0ff5rs" class="btn bp blg bp-pulse">⚡ Quero contratar agora →</a>
+    <p class="cta-micro">Sem fidelidade · Instalação grátis · Cancele quando quiser</p>
+    <div class="cta-seals">
+      <span class="cta-seal">🛡️ Sem multa</span>
+      <span class="cta-seal">🔒 Dados protegidos</span>
+      <span class="cta-seal">⚡ Ativação em 48h</span>
+      <span class="cta-seal">✅ +12 mil clientes</span>
+    </div>
+  </div>
+</section>
+
+<!-- 13. FOOTER -->
+<footer>
+  <div class="ct">
+    <div class="ft">
+      <div class="ft-b">
+        <a href="#" class="logo"><img src="Logo xnet.png" alt="X NET"/></a>
+        <p>Internet fibra óptica de verdade. Rápida, estável e sem enrolação.</p>
+      </div>
+      <div class="ft-c">
+        <h4>Links</h4>
+        <ul>
+          <li><a href="#plans">Planos</a></li>
+          <li><a href="#why">Sobre</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#">Área do Cliente</a></li>
+        </ul>
+      </div>
+      <div class="ft-c ft-ct">
+        <h4>Fale Conosco</h4>
+        <a href="https://wa.link/0ff5rs">📲 WhatsApp</a>
+        <a href="#">📞 Telefone</a>
+        <a href="#">✉️ E-mail</a>
+      </div>
+    </div>
+    <div class="ft-bot"><p>© 2025 X NET Fibra Óptica. Todos os direitos reservados.</p></div>
+  </div>
+</footer>
+
+<!-- 14. WHATSAPP FLOAT -->
+<a href="https://wa.link/0ff5rs" class="wpp" aria-label="WhatsApp">
+  <span class="wpp-tip">Fale conosco</span>
+  <svg viewBox="0 0 24 24"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.95 1.17-.17.2-.35.22-.65.07-.3-.15-1.27-.47-2.42-1.49-.9-.8-1.5-1.78-1.67-2.08-.18-.3-.02-.46.13-.61.14-.14.3-.35.45-.52.15-.18.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51h-.58c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.49s1.07 2.89 1.22 3.09c.15.2 2.1 3.2 5.08 4.49.71.3 1.27.49 1.7.63.71.23 1.36.2 1.87.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.18-1.42-.08-.13-.27-.2-.57-.35zm-5.47 7.5a9.85 9.85 0 01-5.03-1.38l-.36-.21-3.74.98 1-3.64-.24-.38A9.86 9.86 0 012.12 12c0-5.46 4.44-9.9 9.9-9.9 2.65 0 5.13 1.03 7 2.9a9.83 9.83 0 012.9 7c0 5.46-4.44 9.9-9.9 9.9zm8.41-18.31A11.82 11.82 0 0012.02.08C5.48.08.12 5.44.12 11.98a11.87 11.87 0 001.59 5.95L0 24l6.23-1.63a11.88 11.88 0 005.79 1.5c6.54 0 11.88-5.35 11.88-11.89 0-3.18-1.24-6.16-3.48-8.41z"/></svg>
+</a>
+
+<script>
+// Countdown (24h loop)
+(function(){
+  const end = Date.now() + 24*60*60*1000;
+  function tick(){
+    const d = Math.max(0, end - Date.now());
+    const h = Math.floor(d/3600000), m = Math.floor((d%3600000)/60000), s = Math.floor((d%60000)/1000);
+    document.getElementById('cd-h').textContent = String(h).padStart(2,'0');
+    document.getElementById('cd-m').textContent = String(m).padStart(2,'0');
+    document.getElementById('cd-s').textContent = String(s).padStart(2,'0');
+    if(d>0) requestAnimationFrame(tick);
+  }
+  tick();
+})();
+
+// Counter animation
+const counters = document.querySelectorAll('[data-target]');
+const cio = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(!e.isIntersecting) return;
+    const el = e.target, target = parseFloat(el.dataset.target), dec = el.dataset.decimal === 'true';
+    let cur = 0;
+    const step = target / 60;
+    function up(){
+      cur += step;
+      if(cur >= target){ el.textContent = dec ? target.toFixed(1) : target.toLocaleString('pt-BR'); return; }
+      el.textContent = dec ? cur.toFixed(1) : Math.floor(cur).toLocaleString('pt-BR');
+      requestAnimationFrame(up);
+    }
+    up();
+    cio.unobserve(el);
+  });
+}, {threshold: .5});
+counters.forEach(c => cio.observe(c));
+
+// FAQ
+document.querySelectorAll('.fq-q').forEach(q => {
+  q.addEventListener('click', () => {
+    const f = q.parentElement, o = f.classList.contains('open');
+    document.querySelectorAll('.fq').forEach(i => i.classList.remove('open'));
+    if(!o) f.classList.add('open');
+  });
+});
+
+// Scroll reveal
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('vis'); });
+}, {threshold: .08});
+document.querySelectorAll('.fu').forEach(el => io.observe(el));
+
+// Nav scroll
+window.addEventListener('scroll', () => {
+  document.querySelector('nav').style.background =
+    scrollY > 60 ? 'rgba(10,0,16,.92)' : 'rgba(10,0,16,.75)';
+});
+
+// Particles
+(function(){
+  const box = document.getElementById('particles');
+  for(let i=0;i<20;i++){
+    const s = document.createElement('span');
+    s.style.left = Math.random()*100+'%';
+    s.style.top = (60+Math.random()*40)+'%';
+    s.style.setProperty('--d', (5+Math.random()*10)+'s');
+    s.style.animationDelay = Math.random()*8+'s';
+    s.style.width = s.style.height = (1+Math.random()*2)+'px';
+    box.appendChild(s);
+  }
+})();
+
+// Testimonial Carousel
+(function(){
+  const track = document.getElementById('tg-track');
+  const dots = document.querySelectorAll('.tg-dot');
+  const prev = document.getElementById('tg-prev');
+  const next = document.getElementById('tg-next');
+  let current = 0;
+  const total = dots.length;
+  function goTo(i){
+    current = ((i % total) + total) % total;
+    track.style.transform = 'translateX(-' + (current * 100) + '%)';
+    dots.forEach((d,idx) => d.classList.toggle('active', idx === current));
+  }
+  prev.addEventListener('click', () => goTo(current - 1));
+  next.addEventListener('click', () => goTo(current + 1));
+  dots.forEach(d => d.addEventListener('click', () => goTo(parseInt(d.dataset.slide))));
+  // Auto-advance every 6 seconds
+  setInterval(() => goTo(current + 1), 6000);
+})();
+</script>
+</body>
+</html>
